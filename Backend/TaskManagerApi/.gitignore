@@ -24,3 +24,7 @@ packages/
 *.nupkg
 *.nuget.props
 *.nuget.targets
+/.idea/.idea.TaskManagerApi.dir/.idea/.gitignore
+/.idea/.idea.TaskManagerApi.dir/.idea/encodings.xml
+/.idea/.idea.TaskManagerApi.dir/.idea/indexLayout.xml
+/.idea/.idea.TaskManagerApi.dir/.idea/vcs.xml
