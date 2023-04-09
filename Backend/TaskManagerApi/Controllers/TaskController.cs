@@ -27,4 +27,24 @@ public class TaskController : ControllerBase
         }
         return Ok(new { task });
     }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateTask([FromBody] UserTaskDTO userTaskDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        try
+        {
+            var userTask = _taskService.CreateTaskFromDto(userTaskDto);
+            await _taskService.Add(userTask);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, $"Error creating task: {e.Message}");
+        }
+    }
 }
