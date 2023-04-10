@@ -4,7 +4,7 @@ using TaskManagerApi.Models.DTOs;
 
 namespace TaskManagerApi.Service;
 
-public class TaskService : ITaskService
+public class TaskService : ITaskService, IUpdateService<UserTaskDTO>
 {
     private readonly TaskManagerContext _context;
 
@@ -30,12 +30,12 @@ public class TaskService : ITaskService
         await _context.SaveChangesAsync();
     }
 
-    public async Task<bool> Update(long id)
+    public async Task<bool> Update(long id, UserTaskDTO entity)
     {
         var task = await Get(id);
         if (task != null)
         {
-            _context.UserTasks.Entry(task).CurrentValues.SetValues(task);
+            _context.UserTasks.Entry(task).CurrentValues.SetValues(entity);
             await _context.SaveChangesAsync();
             return true;
         }
