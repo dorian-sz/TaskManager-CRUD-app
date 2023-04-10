@@ -5,6 +5,6 @@ namespace TaskManagerApi.Service;
 
 public interface ITaskService : IService<UserTask>
 {
-    Task AssignUser(User user);
-    UserTask CreateTaskFromDto(UserTaskDTO userTaskDto);
+    Task<bool> AssignUser(User user, long id);
+    Task<UserTask> CreateTaskFromDto(UserTaskDTO userTaskDto);
 }
