@@ -1,8 +1,10 @@
 ﻿using TaskManagerApi.Models;
+using TaskManagerApi.Models.DTOs;
 
 namespace TaskManagerApi.Service;
 
-public interface ITaskService : IService<Task>
+public interface ITaskService : IService<UserTask>
 {
-    void AssignUser(User user);
+    Task AssignUser(User user);
+    UserTask CreateTaskFromDto(UserTaskDTO userTaskDto);
 }
