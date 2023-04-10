@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TaskManagerApi;
 using TaskManagerApi.Models;
+using TaskManagerApi.Models.DTOs;
 using TaskManagerApi.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<TaskManagerContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<IUpdateService<UserTaskDTO>, TaskService>();
 builder.Services.AddScoped<IService<User>, UserService>();
 
 var app = builder.Build();
