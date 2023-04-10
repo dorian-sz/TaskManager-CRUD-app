@@ -26,7 +26,7 @@ public class TaskController : ControllerBase
         
         if (task == null)
         {
-            return NotFound($"Error, record not found");
+            return NotFound($"Error, task not found");
         }
         return Ok(new { task });
     }
@@ -65,7 +65,7 @@ public class TaskController : ControllerBase
             return Ok();
         }
 
-        return StatusCode(404, $"Error deleting, record not found");
+        return StatusCode(404, $"Error deleting, task not found");
     }
 
     [HttpPut("{id}")]
@@ -76,6 +76,6 @@ public class TaskController : ControllerBase
             return Ok();
         }
 
-        return StatusCode(404, $"Error updating, record not found");
+        return StatusCode(404, $"Error updating, task not found");
     }
 }
