@@ -38,7 +38,7 @@ public class TaskController : ControllerBase
 
         try
         {
-            var userTask = _taskService.CreateTaskFromDto(userTaskDto);
+            var userTask = await _taskService.CreateTaskFromDto(userTaskDto);
             await _taskService.Add(userTask);
             return Ok();
         }
