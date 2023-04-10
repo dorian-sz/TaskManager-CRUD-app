@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TaskManagerApi.Models;
 using TaskManagerApi.Models.DTOs;
 using TaskManagerApi.Service;
@@ -10,10 +11,12 @@ namespace TaskManagerApi.Controllers;
 public class TaskController : ControllerBase
 {
     private readonly ITaskService _taskService;
+    private readonly IUpdateService<UserTaskDTO> _updateService;
 
-    public TaskController(ITaskService taskService)
+    public TaskController(ITaskService taskService, IUpdateService<UserTaskDTO> updateService)
     {
         _taskService = taskService;
+        _updateService = updateService;
     }
 
     [HttpGet("{id}")]
@@ -23,7 +26,7 @@ public class TaskController : ControllerBase
         
         if (task == null)
         {
-            return NotFound();
+            return NotFound($"Error, record not found");
         }
         return Ok(new { task });
     }
@@ -42,9 +45,37 @@ public class TaskController : ControllerBase
             await _taskService.Add(userTask);
             return Ok();
         }
-        catch (Exception e)
+        catch (DbUpdateException e)
         {
             return StatusCode(500, $"Error creating task: {e.Message}");
         }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllTasks()
+    {
+        return Ok(await _taskService.GetAll());
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteTask(long id)
+    {
+        if (await _taskService.Delete(id))
+        {
+            return Ok();
+        }
+
+        return StatusCode(404, $"Error deleting, record not found");
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateTask(long id, [FromBody] UserTaskDTO userTaskDto)
+    {
+        if (await _updateService.Update(id, userTaskDto))
+        {
+            return Ok();
+        }
+
+        return StatusCode(404, $"Error updating, record not found");
     }
 }
