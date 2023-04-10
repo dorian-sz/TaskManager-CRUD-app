@@ -23,5 +23,16 @@ public class UserController : ControllerBase
     {
         return Ok(await _service.GetAll());
     }
+    
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetUser(long id)
+    {
+        var user = await _service.Get(id);
+        if (user == null)
+        {
+            return NotFound($"Error, user not found");
+        }
+        return Ok(user);
+    }
 
 }
