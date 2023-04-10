@@ -18,4 +18,10 @@ public class UserController : ControllerBase
         _updateService = updateService;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetUsers()
+    {
+        return Ok(await _service.GetAll());
+    }
+
 }
