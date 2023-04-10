@@ -35,4 +35,14 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
+    [HttpPost("{id}")]
+    public async Task<IActionResult> UpdateUser(long id, [FromBody] UserDTO userDto)
+    {
+        if (await _updateService.Update(id, userDto))
+        {
+            return Ok();
+        }
+
+        return StatusCode(404, $"Error, user not found");
+    }
 }
