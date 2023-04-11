@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TaskManagerApi.Models;
 using TaskManagerApi.Models.DTOs;
 using TaskManagerApi.Service;
@@ -9,10 +10,10 @@ namespace TaskManagerApi.Controllers;
 [Route("/user")]
 public class UserController : ControllerBase
 {
-    private readonly IService<User> _service;
+    private readonly IUserService _service;
     private readonly IUpdateService<UserDTO> _updateService;
 
-    public UserController(IService<User> service, IUpdateService<UserDTO> updateService)
+    public UserController(IUserService service, IUpdateService<UserDTO> updateService)
     {
         _service = service;
         _updateService = updateService;
@@ -35,7 +36,7 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
-    [HttpPost("{id}")]
+    [HttpPut("{id}")]
     public async Task<IActionResult> UpdateUser(long id, [FromBody] UserDTO userDto)
     {
         if (await _updateService.Update(id, userDto))
@@ -44,5 +45,20 @@ public class UserController : ControllerBase
         }
 
         return StatusCode(404, $"Error, user not found");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateUser([FromBody]UserDTO userDto)
+    {
+        try
+        {
+            var user = await _service.CreateUserFromDTO(userDto);
+            await _service.Add(user);
+            return Ok();
+        }
+        catch (DbUpdateException e)
+        {
+            return StatusCode(500, $"Error creating user: {e.Message}");
+        }
     }
 }
