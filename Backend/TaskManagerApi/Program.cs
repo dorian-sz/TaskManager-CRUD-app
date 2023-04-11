@@ -18,7 +18,8 @@ builder.Services.AddDbContext<TaskManagerContext>(options =>
 
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<IUpdateService<UserTaskDTO>, TaskService>();
-builder.Services.AddScoped<IService<User>, UserService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUpdateService<UserDTO>, UserService>();
 
 var app = builder.Build();
 
