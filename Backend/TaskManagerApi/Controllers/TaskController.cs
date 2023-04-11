@@ -34,11 +34,6 @@ public class TaskController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateTask([FromBody] UserTaskDTO userTaskDto)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         try
         {
             var userTask = await _taskService.CreateTaskFromDto(userTaskDto);
