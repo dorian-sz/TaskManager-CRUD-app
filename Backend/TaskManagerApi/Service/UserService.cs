@@ -5,7 +5,7 @@ using TaskManagerApi.Models.DTOs;
 
 namespace TaskManagerApi.Service;
 
-public class UserService : IService<User>, IUpdateService<UserDTO>
+public class UserService : IUserService, IUpdateService<UserDTO>
 {
     private readonly TaskManagerContext _context;
 
@@ -40,6 +40,15 @@ public class UserService : IService<User>, IUpdateService<UserDTO>
         }
 
         return false;
+    }
+
+    public async Task<User> CreateUserFromDTO(UserDTO userDto)
+    {
+        return await Task.FromResult(new User
+        {
+            UserName = userDto.Username,
+            Password = userDto.Password
+        });
     }
 
     public async Task<bool> Update(long id, UserDTO entity)
