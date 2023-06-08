@@ -20,9 +20,14 @@ public class UserService : IUserService
 
     public async Task<User?> Get(long id)
     {
-        return await _context.Users.FirstOrDefaultAsync(task => task.userID == id);
+        return await _context.Users.FirstOrDefaultAsync(user => user.userID == id);
     }
 
+    public async Task<User?> Get(LoginDTO loginDto)
+    {
+        return await _context.Users.FirstOrDefaultAsync(user => 
+            user.Username == loginDto.Username);
+    }
     public async Task<bool> Add(User entity)
     {
         await _context.Users.AddAsync(entity);
@@ -58,7 +63,7 @@ public class UserService : IUserService
     
     public User CreateUser(UserDTO userDto)
     {
-        return new User { Username = userDto.Username, Password = userDto.Password };
+        return new User { Username = userDto.Username, Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password) };
     }
 
     public async Task<bool> UserExists(string username)
