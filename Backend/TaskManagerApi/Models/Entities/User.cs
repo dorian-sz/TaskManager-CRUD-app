@@ -5,8 +5,9 @@ namespace TaskManagerApi.Models;
 public class User
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public long ID { get; set; }
+    public long userID { get; set; }
     
-    public string UserName { get; set; }
+    public string Username { get; set; }
     public string Password { get; set; }
+    public ICollection<UserTask?> UserTasks { get; set; }
 }

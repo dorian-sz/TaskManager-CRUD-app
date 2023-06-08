@@ -1,10 +1,12 @@
-﻿namespace TaskManagerApi.Service;
+﻿using TaskManagerApi.Models;
+
+namespace TaskManagerApi.Service;
 
 public interface IService<T>
 {
-    IEnumerable<T> GetAll();
-    T Get();
-    void Add(T entity);
-    void Update(T entity);
-    void Delete(long id);
+    Task<ICollection<T>> GetAll();
+    Task<T?> Get(long id);
+    Task<bool> Add(T entity);
+    Task<bool> Delete(T entity);
+    Task<bool> Save();
 }
