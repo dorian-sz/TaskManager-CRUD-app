@@ -65,6 +65,6 @@ public class UserController : ControllerBase
         {
             return Ok();
         }
-        return BadRequest();
+        return StatusCode(400);
     }
 }
