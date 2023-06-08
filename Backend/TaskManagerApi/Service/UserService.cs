@@ -61,5 +61,8 @@ public class UserService : IUserService
         return new User { Username = userDto.Username, Password = userDto.Password };
     }
 
-
+    public async Task<bool> UserExists(string username)
+    {
+        return await _context.Users.AnyAsync(user => user.Username == username);
+    }
 }
