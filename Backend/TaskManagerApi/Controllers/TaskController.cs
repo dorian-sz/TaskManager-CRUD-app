@@ -56,7 +56,7 @@ public class TaskController : ControllerBase
         }
         var task = _taskService.CreateTask(taskDto, user);
         await _taskService.Add(task);
-        return Ok();
+        return StatusCode(201);
     }
 
     [HttpPut]
