@@ -47,8 +47,14 @@ public class UserController : ControllerBase
             return StatusCode(409);
         }
         var task = _service.CreateUser(userDto);
-        await _service.Add(task);
-        return StatusCode(201);
+        var success = await _service.Add(task);
+
+        if (success)
+        {
+            return StatusCode(201);
+        }
+
+        return StatusCode(400);
     }
 
     [HttpPut]
@@ -76,6 +82,6 @@ public class UserController : ControllerBase
         {
             return Ok();
         }
-        return BadRequest();
+        return StatusCode(400);
     }
 }
