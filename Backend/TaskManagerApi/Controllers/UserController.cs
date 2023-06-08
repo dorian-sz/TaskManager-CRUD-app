@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagerApi.Models;
 using TaskManagerApi.Models.DTOs;
@@ -6,6 +7,7 @@ using TaskManagerApi.Service;
 
 namespace TaskManagerApi.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class UserController : ControllerBase
@@ -38,25 +40,6 @@ public class UserController : ControllerBase
         
     }
     
-    [HttpPost]
-    public async Task<ActionResult> AddUser([FromBody] UserDTO userDto)
-    {
-        var exists = await _service.UserExists(userDto.Username);
-        if (exists)
-        {
-            return StatusCode(409);
-        }
-        var task = _service.CreateUser(userDto);
-        var success = await _service.Add(task);
-
-        if (success)
-        {
-            return StatusCode(201);
-        }
-
-        return StatusCode(400);
-    }
-
     [HttpPut]
     public async Task<ActionResult> UpdateUser([FromBody] UserDTO userDto)
     {
