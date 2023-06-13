@@ -58,8 +58,14 @@ public class TaskController : ControllerBase
             return NotFound();
         }
         var task = _taskService.CreateTask(taskDto, user);
-        await _taskService.Add(task);
-        return StatusCode(201);
+        
+        var success = await _taskService.Add(task);
+        if (success)
+        {
+            return StatusCode(201);
+        }
+
+        return StatusCode(400);
     }
 
     [HttpPut]
@@ -87,6 +93,6 @@ public class TaskController : ControllerBase
         {
             return Ok();
         }
-        return BadRequest();
+        return StatusCode(400);
     }
 }
