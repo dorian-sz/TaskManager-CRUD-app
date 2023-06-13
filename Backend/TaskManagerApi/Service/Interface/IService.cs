@@ -8,5 +8,4 @@ public interface IService<T>
     Task<T?> Get(long id);
     Task<bool> Add(T entity);
     Task<bool> Delete(T entity);
-    Task<bool> Save();
 }
