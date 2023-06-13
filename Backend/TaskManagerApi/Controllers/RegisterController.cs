@@ -27,5 +27,4 @@ public class RegisterController : ControllerBase
         await _service.Add(task);
         return StatusCode(201);
     }
-    
 }
