@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagerApi.Models;
 using TaskManagerApi.Models.DTOs;
 using TaskManagerApi.Service;
 
 namespace TaskManagerApi.Controllers;
+
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class TaskController : ControllerBase
