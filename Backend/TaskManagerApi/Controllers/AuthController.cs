@@ -19,11 +19,11 @@ namespace TaskManagerApi.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IUserService _service;
-    private readonly ICookieAuth _cookieAuth;
-    public AuthController(IUserService service, ICookieAuth cookieAuth)
+    private readonly ICookieService _cookieService;
+    public AuthController(IUserService service, ICookieService cookieService)
     {
         _service = service;
-        _cookieAuth = cookieAuth;
+        _cookieService = cookieService;
     }
 
     [AllowAnonymous]
@@ -34,7 +34,7 @@ public class AuthController : ControllerBase
         
         if (user != null && BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password))
         {
-            var cookie = _cookieAuth.Generate(user);
+            var cookie = _cookieService.Generate(user);
             await HttpContext.SignInAsync("CookieAuthentication", cookie);
             
             return Ok(new { message = "success" });
