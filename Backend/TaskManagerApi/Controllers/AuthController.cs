@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net.Security;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -12,18 +13,17 @@ using TaskManagerApi.Service;
 
 namespace TaskManagerApi.Controllers;
 
+[AllowAnonymous]
 [Route("api/[controller]")]
 [ApiController]
 public class AuthController : ControllerBase
 {
-    private readonly IConfiguration _configuration;
     private readonly IUserService _service;
-    private readonly IJwtService _jwtService;
-    public AuthController(IConfiguration configuration, IUserService service, IJwtService jwtService)
+    private readonly ICookieAuth _cookieAuth;
+    public AuthController(IUserService service, ICookieAuth cookieAuth)
     {
-        _configuration = configuration;
         _service = service;
-        _jwtService = jwtService;
+        _cookieAuth = cookieAuth;
     }
 
     [AllowAnonymous]
@@ -34,44 +34,12 @@ public class AuthController : ControllerBase
         
         if (user != null && BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password))
         {
-            var token = _jwtService.Generate(user);
-            Response.Cookies.Append("jwt", token, new CookieOptions
-            {
-                HttpOnly = true
-            });
+            var cookie = _cookieAuth.Generate(user);
+            await HttpContext.SignInAsync("CookieAuthentication", cookie);
             
             return Ok(new { message = "success" });
         }
 
-        return BadRequest();
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> User()
-    {
-        try
-        {
-            var jwt = Request.Cookies["jwt"];
-
-            var token = _jwtService.Verify(jwt);
-
-            long userId = long.Parse(token.Issuer);
-
-            var user = await _service.Get(userId);
-
-            return Ok(user);
-        }
-        catch (Exception _)
-        {
-            return Unauthorized();
-        }
-    }
-
-    [HttpPost("logout")]
-    public IActionResult Logout()
-    {
-        Response.Cookies.Delete("jwt");
-
-        return Ok();
+        return BadRequest(new { message = "Invalid credentials"});
     }
 }
