@@ -30,7 +30,7 @@ public class UserService : IUserService
     }
     public async Task<bool> Add(User entity)
     {
-        await _context.Users.AddAsync(entity);
+        _context.Users.Add(entity);
         return await Save();
     }
 

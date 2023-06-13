@@ -26,7 +26,7 @@ public class TaskService : ITaskService
 
     public async Task<bool> Add(UserTask entity)
     {
-        await _context.UserTasks.AddAsync(entity);
+        _context.UserTasks.Add(entity);
         return await Save();
     }
     
