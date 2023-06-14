@@ -34,6 +34,7 @@ public class UserControllerTests
         var result = await controller.GetUsers();
     
         //Assert
+        A.CallTo(() => _service.GetAll()).MustHaveHappenedOnceExactly();
         result.Should().NotBeNull();
         result.Should().BeOfType(typeof(ActionResult<ICollection<User>>));
     }
