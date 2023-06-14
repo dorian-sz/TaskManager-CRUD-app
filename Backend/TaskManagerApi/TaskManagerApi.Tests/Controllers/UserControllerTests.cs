@@ -24,9 +24,9 @@ public class UserControllerTests
     public async void UserController_GetUsers_ReturnUserDTOCollection()
     {
         //Arrange
-        var users = A.Fake<ICollection<UserDTO>>();
-        var userList = A.Fake<List<UserDTO>>();
-        A.CallTo(() => _mapper.Map<ICollection<UserDTO>>(users)).Returns(userList);
+        var users = A.Fake<ICollection<User>>();
+        var userCollection = A.Fake<ICollection<UserDTO>>();
+        A.CallTo(() => _mapper.Map<ICollection<UserDTO>>(users)).Returns(userCollection);
         var controller = new UserController(_service, _mapper);
         
         
