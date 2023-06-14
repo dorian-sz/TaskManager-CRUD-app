@@ -42,9 +42,10 @@ public class UserControllerTests
     public async void UserController_GetUser_ReturnUser()
     {
         //Arrange
-        var user = A.Fake<UserDTO>();
+        var userDto = A.Fake<UserDTO>();
+        var user = A.Fake<User>();
         long userID = 1;
-        A.CallTo(() => _mapper.Map<UserDTO>(user)).Returns(user);
+        A.CallTo(() => _mapper.Map<UserDTO>(user)).Returns(userDto);
         var controller = new UserController(_service, _mapper);
 
         //Act
@@ -54,4 +55,5 @@ public class UserControllerTests
         result.Should().NotBeNull();
         result.Should().BeOfType(typeof(ActionResult<User>));
     }
+
 }
