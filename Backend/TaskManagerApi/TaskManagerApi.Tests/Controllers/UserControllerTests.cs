@@ -57,5 +57,21 @@ public class UserControllerTests
         result.Should().NotBeNull();
         result.Should().BeOfType<ActionResult<User>>();
     }
+    
+    [Fact]
+    public async void UserController_UpdateUser_ReturnOK()
+    {
+        //Arrange
+        var userDto = A.Fake<UserDTO>();
+        A.CallTo(() => _service.Update(userDto)).Returns(true);
+        var controller = new UserController(_service, _mapper);
 
+        //Act
+        var result = await controller.UpdateUser(userDto);
+        
+        //Assert
+        A.CallTo(() => _service.Update(userDto)).MustHaveHappenedOnceExactly();
+        result.Should().NotBeNull();
+        result.Should().BeOfType<OkResult>();
+    }
 }
