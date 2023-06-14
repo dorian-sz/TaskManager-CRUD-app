@@ -3,6 +3,7 @@ using FakeItEasy;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagerApi.Controllers;
+using TaskManagerApi.Models;
 using TaskManagerApi.Models.DTOs;
 using TaskManagerApi.Service;
 
@@ -34,6 +35,22 @@ public class UserControllerTests
     
         //Assert
         result.Should().NotBeNull();
-        result.Should().BeOfType(typeof(ActionResult<ICollection<UserDTO>>));
+        result.Should().BeOfType(typeof(ActionResult<ICollection<User>>));
+    }
+
+    [Fact]
+    public async void UserController_GetUser_ReturnUser()
+    {
+        //Arrange
+        var user = A.Fake<UserDTO>();
+        A.CallTo(() => _mapper.Map<UserDTO>(user)).Returns(user);
+        var controller = new UserController(_service, _mapper);
+
+        //Act
+        var result = await controller.GetUser(1);
+        
+        //Assert
+        result.Should().NotBeNull();
+        result.Should().BeOfType(typeof(ActionResult<User>));
     }
 }
