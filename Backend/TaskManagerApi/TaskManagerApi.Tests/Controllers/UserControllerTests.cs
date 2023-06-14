@@ -19,4 +19,21 @@ public class UserControllerTests
         _mapper = A.Fake<IMapper>();
     }
 
+    [Fact]
+    public async void UserController_GetUsers_ReturnUserDTOCollection()
+    {
+        //Arrange
+        var users = A.Fake<ICollection<UserDTO>>();
+        var userList = A.Fake<List<UserDTO>>();
+        A.CallTo(() => _mapper.Map<ICollection<UserDTO>>(users)).Returns(userList);
+        var controller = new UserController(_service, _mapper);
+        
+        
+        //Act
+        var result = await controller.GetUsers();
+    
+        //Assert
+        result.Should().NotBeNull();
+        result.Should().BeOfType(typeof(ActionResult<ICollection<UserDTO>>));
+    }
 }
