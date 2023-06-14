@@ -46,16 +46,21 @@ public class UserControllerTests
         var userDto = A.Fake<UserDTO>();
         var user = A.Fake<User>();
         long userID = 1;
+        userDto.userID = userID;
+        A.CallTo(() => _service.Get(userID)).Returns(user);
         A.CallTo(() => _mapper.Map<UserDTO>(user)).Returns(userDto);
         var controller = new UserController(_service, _mapper);
-
+        
         //Act
         var result = await controller.GetUser(userID);
+        var objectResult = (OkObjectResult)result.Result;
+        var returnedUser = (UserDTO)objectResult.Value;
         
         //Assert
         A.CallTo(() => _service.Get(userID)).MustHaveHappenedOnceExactly();
         result.Should().NotBeNull();
         result.Should().BeOfType<ActionResult<User>>();
+        Assert.Equal(userDto.userID, returnedUser.userID);
     }
     
     [Fact]
