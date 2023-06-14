@@ -43,11 +43,12 @@ public class UserControllerTests
     {
         //Arrange
         var user = A.Fake<UserDTO>();
+        long userID = 1;
         A.CallTo(() => _mapper.Map<UserDTO>(user)).Returns(user);
         var controller = new UserController(_service, _mapper);
 
         //Act
-        var result = await controller.GetUser(1);
+        var result = await controller.GetUser(userID);
         
         //Assert
         result.Should().NotBeNull();
