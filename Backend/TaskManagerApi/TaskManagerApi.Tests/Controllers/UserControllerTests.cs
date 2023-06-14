@@ -55,7 +55,7 @@ public class UserControllerTests
         //Assert
         A.CallTo(() => _service.Get(userID)).MustHaveHappenedOnceExactly();
         result.Should().NotBeNull();
-        result.Should().BeOfType(typeof(ActionResult<User>));
+        result.Should().BeOfType<ActionResult<User>>();
     }
 
 }
