@@ -65,7 +65,7 @@ public class TaskController : ControllerBase
             return StatusCode(201);
         }
 
-        return StatusCode(400);
+        return StatusCode(500);
     }
 
     [HttpPut]
@@ -93,6 +93,6 @@ public class TaskController : ControllerBase
         {
             return Ok();
         }
-        return StatusCode(400);
+        return StatusCode(500);
     }
 }
