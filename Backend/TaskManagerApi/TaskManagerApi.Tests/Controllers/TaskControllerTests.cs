@@ -98,4 +98,21 @@ public class TaskControllerTests
         result.Should().NotBeNull();
         result.Should().BeOfType<OkResult>();
     }
+    
+    [Fact]
+    public async void TaskController_UpdateTask_ReturnNotFound()
+    {
+        //Arrange
+        var taskDto = A.Fake<TaskDTO>();
+        A.CallTo(() => _taskService.Update(taskDto)).Returns(false);
+        var controller = new TaskController(_taskService, _userService, _mapper);
+        
+        //Act
+        var result = await controller.UpdateTask(taskDto);
+        
+        //Assert
+        A.CallTo(() => _taskService.Update(taskDto)).MustHaveHappenedOnceExactly();
+        result.Should().NotBeNull();
+        result.Should().BeOfType<NotFoundResult>();
+    }
 }
