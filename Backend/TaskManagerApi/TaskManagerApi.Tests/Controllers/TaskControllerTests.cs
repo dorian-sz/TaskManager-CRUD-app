@@ -160,6 +160,7 @@ public class TaskControllerTests
     public async void TaskController_DeleteTask_ReturnInternalServerError()
     {
         //Arrange
+        var expectedStatusCode = 500;
         var task = A.Fake<UserTask>();
         long taskID = 1;
         A.CallTo(() => _taskService.Get(taskID)).Returns(task);
@@ -168,11 +169,38 @@ public class TaskControllerTests
         
         //Act
         var result = await controller.DeleteTask(taskID);
+        var statusCodeResult = result as StatusCodeResult;
         
         //Assert
         A.CallTo(() => _taskService.Get(taskID)).MustHaveHappenedOnceExactly();
         A.CallTo(() => _taskService.Delete(task)).MustHaveHappenedOnceExactly();
         result.Should().NotBeNull();
-        result.Should().BeOfType<StatusCodeResult>();
+        Assert.Equal(expectedStatusCode, statusCodeResult.StatusCode);
+    }
+
+    [Fact]
+    public async void TaskController_AddTask_ReturnCreated()
+    {
+        //Arrange
+        var expectedStatusCode = 201;
+        var taskDto = A.Fake<TaskDTO>();
+        var user = A.Fake<User>();
+        var task = A.Fake<UserTask>();
+        long userID = 1;
+        A.CallTo(() => _userService.Get(userID)).Returns(user);
+        A.CallTo(() => _taskService.CreateTask(taskDto, user)).Returns(task);
+        A.CallTo(() => _taskService.Add(task)).Returns(true);
+        var controller = new TaskController(_taskService, _userService, _mapper);
+        
+        //Act
+        var result = await controller.AddTask(taskDto, userID);
+        var createdResult = result as StatusCodeResult;
+        
+        //Assert
+        A.CallTo(() => _userService.Get(userID)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => _taskService.CreateTask(taskDto, user)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => _taskService.Add(task)).MustHaveHappenedOnceExactly();
+        result.Should().NotBeNull();
+        Assert.Equal(expectedStatusCode, createdResult.StatusCode);
     }
 }
