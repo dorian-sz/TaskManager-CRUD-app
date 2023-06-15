@@ -100,4 +100,23 @@ public class UserControllerTests
         result.Should().NotBeNull();
         result.Should().BeOfType <OkResult>();
     }
+
+    [Fact]
+    public async void UserController_GetUser_ReturnNotFound()
+    {
+        //Arrange
+        User? user = null;
+        long userID = 0;
+        A.CallTo(() => _service.Get(userID)).Returns(user);
+        A.CallTo(() => _mapper.Map<UserDTO?>(user)).Returns(null);
+        var controller = new UserController(_service, _mapper);
+        
+        //Act
+        var result = await controller.GetUser(userID);
+        
+        //Assert
+        A.CallTo(() => _service.Get(userID)).MustHaveHappenedOnceExactly();
+        result.Value.Should().BeNull();
+        result.Result.Should().BeOfType<NotFoundResult>();
+    }
 }
