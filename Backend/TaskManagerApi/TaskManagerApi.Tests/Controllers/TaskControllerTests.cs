@@ -45,7 +45,7 @@ public class TaskControllerTests
     }
     
     [Fact]
-    public async void UserController_GetTask_ReturnNotFound()
+    public async void TaskController_GetTask_ReturnNotFound()
     {
         //Arrange
         UserTask? task = null;
@@ -64,7 +64,7 @@ public class TaskControllerTests
     }
     
     [Fact]
-    public async void UserController_GetTasks_ReturnUserTaskDTOCollection()
+    public async void TaskController_GetTasks_ReturnUserTaskDTOCollection()
     {
         //Arrange
         var tasks = A.Fake<ICollection<UserTask>>();
@@ -80,5 +80,22 @@ public class TaskControllerTests
         A.CallTo(() => _taskService.GetAll()).MustHaveHappenedOnceExactly();
         result.Should().NotBeNull();
         result.Should().BeOfType<ActionResult<ICollection<UserTask>>>();
+    }
+    
+    [Fact]
+    public async void TaskController_UpdateTask_ReturnOK()
+    {
+        //Arrange
+        var taskDto = A.Fake<TaskDTO>();
+        A.CallTo(() => _taskService.Update(taskDto)).Returns(true);
+        var controller = new TaskController(_taskService, _userService, _mapper);
+
+        //Act
+        var result = await controller.UpdateTask(taskDto);
+        
+        //Assert
+        A.CallTo(() => _taskService.Update(taskDto)).MustHaveHappenedOnceExactly();
+        result.Should().NotBeNull();
+        result.Should().BeOfType<OkResult>();
     }
 }
