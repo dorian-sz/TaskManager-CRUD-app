@@ -62,4 +62,23 @@ public class TaskControllerTests
         result.Value.Should().BeNull();
         result.Result.Should().BeOfType<NotFoundResult>();
     }
+    
+    [Fact]
+    public async void UserController_GetTasks_ReturnUserTaskDTOCollection()
+    {
+        //Arrange
+        var tasks = A.Fake<ICollection<UserTask>>();
+        var taskCollection = A.Fake<ICollection<TaskDTO>>();
+        A.CallTo(() => _mapper.Map<ICollection<TaskDTO>>(tasks)).Returns(taskCollection);
+        var controller = new TaskController(_taskService, _userService, _mapper);
+        
+        
+        //Act
+        var result = await controller.GetTasks();
+    
+        //Assert
+        A.CallTo(() => _taskService.GetAll()).MustHaveHappenedOnceExactly();
+        result.Should().NotBeNull();
+        result.Should().BeOfType<ActionResult<ICollection<UserTask>>>();
+    }
 }
