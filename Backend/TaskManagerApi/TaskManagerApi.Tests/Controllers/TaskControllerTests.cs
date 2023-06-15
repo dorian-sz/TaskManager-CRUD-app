@@ -254,4 +254,26 @@ public class TaskControllerTests
         result.Should().NotBeNull();
         Assert.Equal(expectedStatusCode, createdResult.StatusCode);
     }
+
+    [Fact]
+    public async void TaskController_GetUserTasks_ReturnOk()
+    {
+        //Arrange
+        var expectedStatusCode = 200;
+        long userId = 1;
+        var taskCollection = A.Fake<ICollection<UserTask>>();
+        var taskDtoCollection = A.Fake<ICollection<TaskDTO>>();
+        A.CallTo(() => _taskService.GetUsersTask(userId)).Returns(taskCollection);
+        A.CallTo(() => _mapper.Map<ICollection<TaskDTO>>(taskCollection)).Returns(taskDtoCollection);
+        var controller = new TaskController(_taskService, _userService, _mapper);
+        
+        //Act
+        var result = await controller.GetUserTasks(userId);
+
+        //Assert
+        A.CallTo(() => _taskService.GetUsersTask(userId)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => _mapper.Map<ICollection<TaskDTO>>(taskCollection)).MustHaveHappenedOnceExactly();
+        result.Should().NotBeNull();
+        result.Should().BeOfType<ActionResult<ICollection<UserTask>>>();
+    }
 }
