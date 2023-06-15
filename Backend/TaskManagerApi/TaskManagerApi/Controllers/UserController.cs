@@ -23,7 +23,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ICollection<UserTask>>> GetUsers()
+    public async Task<ActionResult<ICollection<User>>> GetUsers()
     {
         var users = _mapper.Map<ICollection<UserDTO>>(await _service.GetAll());
         return Ok(users);
@@ -66,6 +66,6 @@ public class UserController : ControllerBase
         {
             return Ok();
         }
-        return StatusCode(400);
+        return StatusCode(500);
     }
 }
