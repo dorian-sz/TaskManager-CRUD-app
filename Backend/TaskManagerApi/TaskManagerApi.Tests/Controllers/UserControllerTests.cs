@@ -136,4 +136,43 @@ public class UserControllerTests
         result.Should().NotBeNull();
         result.Should().BeOfType<NotFoundResult>();
     }
+    
+    [Fact]
+    public async void UserController_DeleteUser_ReturnNotFound()
+    {
+        //Arrange
+        var user = A.Fake<User>();
+        long userID = 1;
+        A.CallTo(() => _service.Get(userID)).Returns((User?)null);
+        var controller = new UserController(_service, _mapper);
+        
+        //Act
+        var result = await controller.DeleteUser(userID);
+        
+        //Assert
+        A.CallTo(() => _service.Get(userID)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => _service.Delete(user)).MustNotHaveHappened();
+        result.Should().NotBeNull();
+        result.Should().BeOfType<NotFoundResult>();
+    }
+    
+    [Fact]
+    public async void UserController_DeleteUser_ReturnInternalServerError()
+    {
+        //Arrange
+        var user = A.Fake<User>();
+        long userID = 1;
+        A.CallTo(() => _service.Get(userID)).Returns(user);
+        A.CallTo(() => _service.Delete(user)).Returns(false);
+        var controller = new UserController(_service, _mapper);
+        
+        //Act
+        var result = await controller.DeleteUser(userID);
+        
+        //Assert
+        A.CallTo(() => _service.Get(userID)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => _service.Delete(user)).MustHaveHappenedOnceExactly();
+        result.Should().NotBeNull();
+        result.Should().BeOfType<StatusCodeResult>();
+    }
 }
