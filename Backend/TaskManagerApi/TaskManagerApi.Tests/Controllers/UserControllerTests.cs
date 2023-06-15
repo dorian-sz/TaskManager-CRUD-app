@@ -86,15 +86,18 @@ public class UserControllerTests
         //Arrange
         var user = A.Fake<User>();
         long userID = 1;
+        user.userID = userID;
         A.CallTo(() => _service.Get(userID)).Returns(user);
         A.CallTo(() => _service.Delete(user)).Returns(true);
         var controller = new UserController(_service, _mapper);
         
         //Act
         var result = await controller.DeleteUser(userID);
-        
+
         //Assert
+        A.CallTo(() => _service.Get(userID)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => _service.Delete(user)).MustHaveHappenedOnceExactly();
         result.Should().NotBeNull();
-        result.Should().BeOfType < OkResult>();
+        result.Should().BeOfType <OkResult>();
     }
 }
