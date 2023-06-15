@@ -203,4 +203,28 @@ public class TaskControllerTests
         result.Should().NotBeNull();
         Assert.Equal(expectedStatusCode, createdResult.StatusCode);
     }
+    
+    [Fact]
+    public async void TaskController_AddTask_ReturnNotFound()
+    {
+        //Arrange
+        var expectedStatusCode = 404;
+        var taskDto = A.Fake<TaskDTO>();
+        var user = A.Fake<User>();
+        var task = A.Fake<UserTask>();
+        long userID = 1;
+        A.CallTo(() => _userService.Get(userID)).Returns((User?)null);
+        var controller = new TaskController(_taskService, _userService, _mapper);
+        
+        //Act
+        var result = await controller.AddTask(taskDto, userID);
+        var createdResult = result as StatusCodeResult;
+        
+        //Assert
+        A.CallTo(() => _userService.Get(userID)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => _taskService.CreateTask(taskDto, user)).MustNotHaveHappened();
+        A.CallTo(() => _taskService.Add(task)).MustNotHaveHappened();
+        result.Should().NotBeNull();
+        Assert.Equal(expectedStatusCode, createdResult.StatusCode);
+    }
 }
