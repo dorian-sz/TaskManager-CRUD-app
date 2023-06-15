@@ -117,7 +117,7 @@ public class TaskControllerTests
     }
         
     [Fact]
-    public async void TaskController_DeleteUser_ReturnOK()
+    public async void TaskController_DeleteTask_ReturnOK()
     {
         //Arrange
         var task = A.Fake<UserTask>();
@@ -135,5 +135,24 @@ public class TaskControllerTests
         A.CallTo(() => _taskService.Delete(task)).MustHaveHappenedOnceExactly();
         result.Should().NotBeNull();
         result.Should().BeOfType <OkResult>();
+    }
+        
+    [Fact]
+    public async void TaskController_DeleteTask_ReturnNotFound()
+    {
+        //Arrange
+        var task = A.Fake<UserTask>();
+        long taskID = 1;
+        A.CallTo(() => _taskService.Get(taskID)).Returns((UserTask?)null);
+        var controller = new TaskController(_taskService, _userService, _mapper);
+        
+        //Act
+        var result = await controller.DeleteTask(taskID);
+        
+        //Assert
+        A.CallTo(() => _taskService.Get(taskID)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => _taskService.Delete(task)).MustNotHaveHappened();
+        result.Should().NotBeNull();
+        result.Should().BeOfType<NotFoundResult>();
     }
 }
