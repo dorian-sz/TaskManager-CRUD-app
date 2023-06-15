@@ -43,4 +43,23 @@ public class TaskControllerTests
         result.Should().BeOfType<ActionResult<UserTask>>();
         Assert.Equal(taskDto.userTaskID, returnedUserTask.userTaskID);
     }
+    
+    [Fact]
+    public async void UserController_GetTask_ReturnNotFound()
+    {
+        //Arrange
+        UserTask? task = null;
+        long taskID = 1;
+        A.CallTo(() => _taskService.Get(taskID)).Returns(task);
+        A.CallTo(() => _mapper.Map<TaskDTO?>(task)).Returns(null);
+        var controller = new TaskController(_taskService, _userService, _mapper);
+        
+        //Act
+        var result = await controller.GetTask(taskID);
+        
+        //Assert
+        A.CallTo(() => _taskService.Get(taskID)).MustHaveHappenedOnceExactly();
+        result.Value.Should().BeNull();
+        result.Result.Should().BeOfType<NotFoundResult>();
+    }
 }
