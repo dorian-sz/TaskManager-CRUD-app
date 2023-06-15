@@ -79,4 +79,22 @@ public class UserControllerTests
         result.Should().NotBeNull();
         result.Should().BeOfType<OkResult>();
     }
+
+    [Fact]
+    public async void UserController_DeleteUser_ReturnOK()
+    {
+        //Arrange
+        var user = A.Fake<User>();
+        long userID = 1;
+        A.CallTo(() => _service.Get(userID)).Returns(user);
+        A.CallTo(() => _service.Delete(user)).Returns(true);
+        var controller = new UserController(_service, _mapper);
+        
+        //Act
+        var result = await controller.DeleteUser(userID);
+        
+        //Assert
+        result.Should().NotBeNull();
+        result.Should().BeOfType < OkResult>();
+    }
 }
