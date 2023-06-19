@@ -20,10 +20,12 @@ public class AuthController : ControllerBase
 {
     private readonly IUserService _service;
     private readonly ICookieService _cookieService;
-    public AuthController(IUserService service, ICookieService cookieService)
+    private readonly IAuthService _authService;
+    public AuthController(IUserService service, ICookieService cookieService, IAuthService authService)
     {
         _service = service;
         _cookieService = cookieService;
+        _authService = authService;
     }
 
     [AllowAnonymous]
@@ -31,12 +33,11 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<string>> Login([FromBody] LoginDTO loginDto)
     {
         var user = await _service.Get(loginDto);
-        
-        if (user != null && BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password))
+
+        if (user != null && _authService.VerifyUserPassword(loginDto.Password, user.Password))
         {
             var cookie = _cookieService.Generate(user);
             await HttpContext.SignInAsync("CookieAuthentication", cookie);
-            
             return Ok(new { message = "success" });
         }
 
