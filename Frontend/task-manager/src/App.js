@@ -1,15 +1,24 @@
 import './App.css';
 import Navigation from './components/Navigation';
 import Login from './pages/Login';
-import Home from './pages/Home';
+import Tasks from './pages/Tasks';
 import Register from './pages/Register';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
+import Layout from './components/Layout';
 
 function App() {
   return (
-    <div className="App">
-      <Login></Login>
-    </div>
+    <Routes>
+      <Route path='/' element={<Layout/>}>
+        {/*Public routes*/}
+        <Route path='login' element={<Login/>}/>
+        <Route path='register' element={<Register/>}/>
+        
+        {/*Protected routes*/}
+        <Route path='/' element={<Tasks/>}/>
+  
+      </Route>
+    </Routes>
   );
 }
 
