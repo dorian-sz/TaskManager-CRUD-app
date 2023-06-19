@@ -1,6 +1,8 @@
 import React, {useRef, useState} from 'react';
 import { useEffect } from 'react';
-import {Navigate} from 'react-router-dom';
+import {Navigate, json} from 'react-router-dom';
+import "./Login.css";
+const loginUrl = "http://localhost:5084/api/Auth"
 
 const Login = () => {
     const userRef = useRef();
@@ -9,6 +11,7 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errMsg, setErrMsg] = useState('')
+    const [displayErr, setDisplayErr] = useState(false);
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
@@ -21,12 +24,27 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        try {
+            const response = await fetch(loginUrl, {
+                method : "POST",
+                headers : {
+                    "Content-Type" : "application/json"
+                },
+                credentials : 'include',
+                body : JSON.stringify({username, password})
+            })
+            const jsonData = await response.json();
+            setUsername('');
+            setPassword('');
+            setSuccess(response.ok);
+            setDisplayErr(!response.ok);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
         <div className="form-signin">
-            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen" } aria-live='assertive'>{errMsg}</p>
             <form onSubmit={handleSubmit}>
                 <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
 
@@ -45,6 +63,7 @@ const Login = () => {
                 </div>
                 <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
             </form> 
+            <h4 className={"text-danger" + " " + (displayErr ? "show" : "hide")}>Invalid credentials</h4>
         </div>
     );
 };
