@@ -15,12 +15,12 @@ public class AuthControllerTests
 {
     private readonly IUserService _service;
     private readonly IAuthService _authService;
-    private readonly ICookieService _cookieService;
+    private readonly IJWTSerivce _ijwtSerivce;
 
     public AuthControllerTests()
     {
         _service = A.Fake<IUserService>();
-        _cookieService = A.Fake<ICookieService>();
+        _ijwtSerivce = A.Fake<IJWTSerivce>();
         _authService = A.Fake<IAuthService>();
     }
     
