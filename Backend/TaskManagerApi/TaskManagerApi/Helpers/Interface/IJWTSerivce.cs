@@ -7,5 +7,5 @@ namespace TaskManagerApi.Helper;
 
 public interface IJWTSerivce
 {
-    SecurityToken Generate(User user);
+    string Generate(User user);
 }

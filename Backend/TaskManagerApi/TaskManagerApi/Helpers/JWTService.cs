@@ -15,7 +15,7 @@ public class JWTService : IJWTSerivce
         _configuration = configuration;
     }
 
-    public SecurityToken Generate(User user)
+    public string Generate(User user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var tokenKey = Encoding.UTF8.GetBytes(_configuration["JWT:key"]!);
@@ -28,9 +28,9 @@ public class JWTService : IJWTSerivce
                 new Claim(ClaimTypes.Role, user.Role)
             }),
             Expires = DateTime.UtcNow.AddMinutes(15),
-            SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.Sha256)
+            SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature)
         };
         var token = tokenHandler.CreateToken(tokenDescriptior);
-        return token;
+        return tokenHandler.WriteToken(token);
     }
 }
