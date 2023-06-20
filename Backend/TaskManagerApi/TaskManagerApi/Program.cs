@@ -48,7 +48,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ICookieService, CookieService>();
+builder.Services.AddScoped<IJWTSerivce, JWTService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
