@@ -37,7 +37,7 @@ public class AuthController : ControllerBase
         if (user != null && _authService.VerifyUserPassword(loginDto.Password, user.Password))
         {
             var token = _jwtSerivce.Generate(user);
-            
+            Response.Cookies.Append("jwtcookie", token, new CookieOptions(){HttpOnly = true});
             return Ok(new { message = "success" });
         }
 
