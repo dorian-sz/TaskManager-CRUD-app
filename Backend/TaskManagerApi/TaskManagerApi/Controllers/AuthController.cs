@@ -30,15 +30,15 @@ public class AuthController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost]
-    public async Task<ActionResult<string>> Login([FromBody] LoginDTO loginDto)
+    public async Task<IActionResult> Login([FromBody] LoginDTO loginDto)
     {
         var user = await _service.Get(loginDto);
 
         if (user != null && _authService.VerifyUserPassword(loginDto.Password, user.Password))
         {
             var token = _jwtSerivce.Generate(user);
-            Response.Cookies.Append("jwtcookie", token, new CookieOptions(){HttpOnly = true});
-            return Ok(new { message = "success" });
+            Response.Cookies.Append("jwtcookie", token.Token, new CookieOptions(){HttpOnly = true});
+            return Ok(token);
         }
 
         return BadRequest(new { message = "Invalid credentials"});

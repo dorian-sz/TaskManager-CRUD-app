@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using TaskManagerApi.Models;
+using TaskManagerApi.Models.DTOs;
 
 namespace TaskManagerApi.Helper;
 
@@ -15,7 +16,7 @@ public class JWTService : IJWTSerivce
         _configuration = configuration;
     }
 
-    public string Generate(User user)
+    public TokenDTO Generate(User user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var tokenKey = Encoding.UTF8.GetBytes(_configuration["JWT:key"]!);
@@ -31,6 +32,6 @@ public class JWTService : IJWTSerivce
             SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature)
         };
         var token = tokenHandler.CreateToken(tokenDescriptior);
-        return tokenHandler.WriteToken(token);
+        return new TokenDTO { Token = tokenHandler.WriteToken(token)};
     }
 }

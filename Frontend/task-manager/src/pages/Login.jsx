@@ -1,39 +1,45 @@
-import React, {useRef, useState} from 'react';
-import { useEffect } from 'react';
+import jwt_decode from "jwt-decode";
+import { useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
+import useAuth from "../hooks/useAuth";
+
 const loginUrl = "http://localhost:5084/api/Auth"
 
 const Login = () => {
-    const userRef = useRef();
-    const errRef = useRef();
+    const { setAuth } = useAuth();
+
+    const navigate = useNavigate();
+    const navTo =  "/tasks";
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [displayErr, setDisplayErr] = useState(false);
-    const [success, setSuccess] = useState(false);
-
-    useEffect(() => {
-        userRef.current.focus();
-    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const response = await fetch(loginUrl, {
-                method : "POST",
-                headers : {
-                    "Content-Type" : "application/json"
-                },
-                credentials : 'include',
-                body : JSON.stringify({username, password})
-            })
-            const jsonData = await response.json();
+
+        const response = await fetch(loginUrl, {
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            credentials : 'include',
+            body : JSON.stringify({username, password})
+        })
+        if (response.ok) {
+            const responseJson = await response.json();
+            const token = responseJson.token;
+            const jwtObj = jwt_decode(token);
+            const role = jwtObj.role;
+            setAuth({username, password, role, token});
+            
             setUsername('');
             setPassword('');
-            setSuccess(response.ok);
-            setDisplayErr(!response.ok);
-        } catch (error) {
-            console.log(error);
+            setDisplayErr(false);
+            navigate(navTo, {replace : true});
+        }else{
+            setDisplayErr(true);
         }
     }
 
@@ -43,7 +49,7 @@ const Login = () => {
                 <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
 
                 <div className="form-floating">
-                    <input type="text" className="form-control" id="username" placeholder="Username" ref={userRef}
+                    <input type="text" className="form-control" id="username" placeholder="Username"
                         onChange={e => setUsername(e.target.value)} value={username} required
                     />
                     <label for="floatingInput">Email address</label>
