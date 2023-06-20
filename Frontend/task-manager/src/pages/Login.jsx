@@ -1,6 +1,5 @@
 import React, {useRef, useState} from 'react';
 import { useEffect } from 'react';
-import {Navigate, json} from 'react-router-dom';
 import "./Login.css";
 const loginUrl = "http://localhost:5084/api/Auth"
 
@@ -10,17 +9,12 @@ const Login = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [errMsg, setErrMsg] = useState('')
     const [displayErr, setDisplayErr] = useState(false);
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         userRef.current.focus();
     }, []);
-
-    useEffect(() => {
-        setErrMsg('');
-    }, [username, password]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
