@@ -1,10 +1,10 @@
 import './App.css';
-import Navigation from './components/Navigation';
 import Login from './pages/Login';
 import Tasks from './pages/Tasks';
 import Register from './pages/Register';
-import {Route, Routes} from "react-router-dom";
 import Layout from './components/Layout';
+import RequireAuth from './components/RequireAuth';
+import {Route, Routes} from "react-router-dom";
 
 function App() {
   return (
@@ -15,7 +15,9 @@ function App() {
         <Route path='register' element={<Register/>}/>
         
         {/*Protected routes*/}
-        <Route path='/' element={<Tasks/>}/>
+        <Route element={<RequireAuth/>}>
+          <Route path='tasks' element={<Tasks/>}/>
+        </Route>
   
       </Route>
     </Routes>
