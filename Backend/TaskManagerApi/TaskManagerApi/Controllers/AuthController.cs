@@ -19,12 +19,12 @@ namespace TaskManagerApi.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IUserService _service;
-    private readonly ICookieService _cookieService;
+    private readonly IJWTSerivce _jwtSerivce;
     private readonly IAuthService _authService;
-    public AuthController(IUserService service, ICookieService cookieService, IAuthService authService)
+    public AuthController(IUserService service, IJWTSerivce jwtSerivce, IAuthService authService)
     {
         _service = service;
-        _cookieService = cookieService;
+        _jwtSerivce = jwtSerivce;
         _authService = authService;
     }
 
@@ -36,8 +36,8 @@ public class AuthController : ControllerBase
 
         if (user != null && _authService.VerifyUserPassword(loginDto.Password, user.Password))
         {
-            var cookie = _cookieService.Generate(user);
-            await HttpContext.SignInAsync("CookieAuthentication", cookie);
+            var token = _jwtSerivce.Generate(user);
+            Response.Cookies.Append("jwtcookie", token, new CookieOptions(){HttpOnly = true});
             return Ok(new { message = "success" });
         }
 
