@@ -3,7 +3,7 @@ import "./styles/AddTask.css";
 
 const taskUrl = "http://localhost:5084/api/Task";
 
-const AddTask = ({userID}) => {
+const AddTask = ({userID, refresh}) => {
     const [TaskName, setTaskName] = useState('');
     const [TaskDescription, setTaskDescription] = useState('');
 
@@ -20,6 +20,7 @@ const AddTask = ({userID}) => {
         })
         setTaskName('');
         setTaskDescription('');
+        refresh();
     }
     
 
