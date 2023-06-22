@@ -59,7 +59,7 @@ public class TaskService : ITaskService
 
     public UserTask CreateTask(TaskDTO taskDto, User user)
     {
-        return new UserTask { TaskName = taskDto.TaskName, TaskDescription = taskDto.TaskName, User = user};
+        return new UserTask { TaskName = taskDto.TaskName, TaskDescription = taskDto.TaskDescription, User = user};
     }
     public async Task<ICollection<UserTask>> GetUsersTask(long id)
     {
