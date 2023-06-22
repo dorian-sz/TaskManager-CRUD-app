@@ -1,12 +1,19 @@
 import {Outlet} from 'react-router-dom'
-import Navigation from './Navigation'
-
+import Navbar from './Navbar'
+import useAuth from "../hooks/useAuth";
 const Layout = () => {
+  const {auth} = useAuth();
   return (
-    <div className='App'>
-        <Navigation/>
+    
+      auth?.username ?
+      <div className='App'>
+        <Navbar/>
         <Outlet/>
-    </div>
+      </div>
+      :
+      <div className='App'>
+        <Outlet/>
+      </div>
   )
 }
 
