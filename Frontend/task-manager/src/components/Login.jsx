@@ -50,12 +50,12 @@ const Login = () => {
                 <h3 className="">Sign in</h3>
 
                 <div className="form-input-container">
-                    <input type="text" className="from-input" id="username" placeholder="Username"
+                    <input type="text" className="form-input" id="username" placeholder="Username"
                         onChange={e => setUsername(e.target.value)} value={username} required
                     />
                 </div>
                 <div className="form-input-container">
-                    <input type="password" className="from-input" id="password" placeholder="Password"
+                    <input type="password" className="form-input" id="password" placeholder="Password"
                         onChange={e => setPassword(e.target.value)}
                         value={password} required
                     />
