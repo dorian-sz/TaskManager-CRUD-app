@@ -29,7 +29,7 @@ const Tasks = () => {
 
     return (
         <div className='tasks-container'>
-            <AddTask userID={userID}/>
+            <AddTask userID={userID} refresh={getTasks}/>
             {tasks ? tasks.map((task) => <Task task={task}/>) : <></>}
             
         </div>
