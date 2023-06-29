@@ -208,4 +208,19 @@ public class TaskServiceTests
         Assert.Equal(user.Username, result.User.Username);
         Assert.Equal(user.Password, result.User.Password);
     }
+
+    [Fact]
+    public async void TaskService_GetUsersTasks_ReturnUserTaskCollection()
+    {
+        //Arrange
+        var taskService = await SetupTaskService();
+        var id = 1;
+        
+        //Act
+        var result = await taskService.GetUsersTask(id);
+        
+        //Assert
+        result.Should().BeOfType<List<UserTask>>();
+        result.Count.Should().Be(10);
+    }
 }
