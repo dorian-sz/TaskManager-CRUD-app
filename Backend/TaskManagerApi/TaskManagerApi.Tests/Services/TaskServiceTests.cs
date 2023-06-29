@@ -1,12 +1,21 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using TaskManagerApi.Models;
+using TaskManagerApi.Models.DTOs;
 using TaskManagerApi.Service;
 
 namespace TaskManagerApi.Tests.Services;
 
 public class TaskServiceTests
 {
+    private async Task<ITaskService> SetupTaskService()
+    {
+        var dbContext = await GetDbContext();
+        ITaskService taskService = new TaskService(dbContext);
+
+        return taskService;
+    }
+    
     private async Task<TaskManagerContext> GetDbContext()
     {
         var options = new DbContextOptionsBuilder<TaskManagerContext>()
@@ -125,13 +134,5 @@ public class TaskServiceTests
 
         //Assert
         result.Should().BeFalse();
-    }
-    
-    private async Task<ITaskService> SetupTaskService()
-    {
-        var dbContext = await GetDbContext();
-        ITaskService taskService = new TaskService(dbContext);
-
-        return taskService;
     }
 }
