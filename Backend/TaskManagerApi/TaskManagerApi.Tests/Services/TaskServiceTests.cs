@@ -114,6 +114,19 @@ public class TaskServiceTests
         contains.Should().BeFalse();
     }
     
+    [Fact]
+    public async void TaskService_Delete_DeleteFailed()
+    {
+        //Arrange
+        var taskService = await SetupTaskService();
+        
+        //Act
+        var result = await taskService.Delete(null);
+
+        //Assert
+        result.Should().BeFalse();
+    }
+    
     private async Task<ITaskService> SetupTaskService()
     {
         var dbContext = await GetDbContext();
