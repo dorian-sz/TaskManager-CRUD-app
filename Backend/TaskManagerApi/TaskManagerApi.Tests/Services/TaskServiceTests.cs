@@ -106,6 +106,28 @@ public class TaskServiceTests
     }
 
     [Fact]
+    public async void TaskService_Update_ReturnTrue()
+    {
+        //Arrange
+        var taskService = await SetupTaskService();
+        var taskDTO = new TaskDTO
+        {
+            userTaskID = 1,
+            TaskName = "updated name",
+            TaskDescription = "updated description"
+        };
+        
+        //Act
+        var result = await taskService.Update(taskDTO);
+        var updatedTask = await taskService.Get(taskDTO.userTaskID);
+        
+        //Assert
+        result.Should().BeTrue();
+        Assert.Equal(taskDTO.TaskName, updatedTask.TaskName);
+        Assert.Equal(taskDTO.TaskDescription, updatedTask.TaskDescription);
+    }
+    
+    [Fact]
     public async void TaskService_Delete_SuccessfullyDeleted()
     {
         //Arrange
