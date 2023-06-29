@@ -10,13 +10,13 @@ public class TaskServiceTests
 {
     private async Task<ITaskService> SetupTaskService()
     {
-        var dbContext = await GetDbContext();
+        var dbContext = await SetupDbContext();
         ITaskService taskService = new TaskService(dbContext);
 
         return taskService;
     }
     
-    private async Task<TaskManagerContext> GetDbContext()
+    private async Task<TaskManagerContext> SetupDbContext()
     {
         var options = new DbContextOptionsBuilder<TaskManagerContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
@@ -24,7 +24,13 @@ public class TaskServiceTests
         
         var databaseContext = new TaskManagerContext(options);
         await databaseContext.Database.EnsureCreatedAsync();
-
+        var user = new User
+        {
+            userID = 1,
+            Username = "user1name",
+            Password = "pass",
+        };
+        
         for (int i = 0; i < 10; i++)
         {
             databaseContext.Add(
@@ -33,11 +39,7 @@ public class TaskServiceTests
                     userTaskID = i + 1,
                     TaskName = $"Task {i + 1} name",
                     TaskDescription = $"Task {i + 1} description",
-                    User = new User
-                    {
-                        Username = "user1name",
-                        Password = "pass",
-                    }
+                    User = user
                 }
             );
             await databaseContext.SaveChangesAsync();
