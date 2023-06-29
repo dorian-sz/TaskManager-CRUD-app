@@ -78,6 +78,24 @@ public class TaskServiceTests
         result.Should().BeNull();
     }
 
+    [Fact]
+    public async void TaskService_Add_ReturnBool()
+    {
+        //Arrange
+        var taskService = await SetupTaskService();
+        var userTask = new UserTask
+        {
+            TaskName = "Task",
+            TaskDescription = "Task"
+        };
+        
+        //Act
+        var result = await taskService.Add(userTask);
+        
+        //Assert
+        result.Should().BeTrue();
+    }
+
     private async Task<ITaskService> SetupTaskService()
     {
         var dbContext = await GetDbContext();
