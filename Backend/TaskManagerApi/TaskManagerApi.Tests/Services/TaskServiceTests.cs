@@ -41,13 +41,20 @@ public class TaskServiceTests
     public async void TaskService_GetAll_ReturnList()
     {
         //Arrange
-        var dbContext = await GetDbContext();
-        var taskService = new TaskService(dbContext);
+        var taskService = await SetupTaskService();
         
         //Act
         var result = await taskService.GetAll();
         
         //Assert
         result.Should().BeOfType<List<UserTask>>();
+    }
+
+    private async Task<ITaskService> SetupTaskService()
+    {
+        var dbContext = await GetDbContext();
+        ITaskService taskService = new TaskService(dbContext);
+
+        return taskService;
     }
 }
