@@ -36,4 +36,18 @@ public class TaskServiceTests
         }
         return databaseContext;
     }
+
+    [Fact]
+    public async void TaskService_GetAll_ReturnList()
+    {
+        //Arrange
+        var dbContext = await GetDbContext();
+        var taskService = new TaskService(dbContext);
+        
+        //Act
+        var result = await taskService.GetAll();
+        
+        //Assert
+        result.Should().BeOfType<List<UserTask>>();
+    }
 }
