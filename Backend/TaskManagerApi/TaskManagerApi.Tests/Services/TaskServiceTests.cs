@@ -1,4 +1,3 @@
-using FakeItEasy;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using TaskManagerApi.Models;
@@ -64,6 +63,19 @@ public class TaskServiceTests
         result.Should().NotBeNull();
         result.Should().BeOfType<UserTask>();
         Assert.Equal(id, result.userTaskID);
+    }
+
+    [Fact] public async void TaskService_Get_ReturnNull()
+    {
+        //Arrange
+        var taskService = await SetupTaskService();
+        long id = 11;
+        
+        //Act
+        var result = await taskService.Get(id);
+        
+        //Assert
+        result.Should().BeNull();
     }
 
     private async Task<ITaskService> SetupTaskService()
