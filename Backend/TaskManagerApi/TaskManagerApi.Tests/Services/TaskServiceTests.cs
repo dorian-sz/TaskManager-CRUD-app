@@ -128,6 +128,25 @@ public class TaskServiceTests
     }
     
     [Fact]
+    public async void TaskService_Update_ReturnFalse()
+    {
+        //Arrange
+        var taskService = await SetupTaskService();
+        var taskDTO = new TaskDTO
+        {
+            userTaskID = 11,
+            TaskName = "updated name",
+            TaskDescription = "updated description"
+        };
+        
+        //Act
+        var result = await taskService.Update(taskDTO);
+
+        //Assert
+        result.Should().BeFalse();
+    }
+    
+    [Fact]
     public async void TaskService_Delete_SuccessfullyDeleted()
     {
         //Arrange
