@@ -96,6 +96,24 @@ public class TaskServiceTests
         result.Should().BeTrue();
     }
 
+    [Fact]
+    public async void TaskService_Delete_SuccessfullyDeleted()
+    {
+        //Arrange
+        long id = 1;
+        var taskService = await SetupTaskService();
+        var userTask = await taskService.Get(1);
+        
+        //Act
+        var result = await taskService.Delete(userTask);
+        var tasks = await taskService.GetAll();
+        var contains = tasks.Contains(userTask);
+        
+        //Assert
+        result.Should().BeTrue();
+        contains.Should().BeFalse();
+    }
+    
     private async Task<ITaskService> SetupTaskService()
     {
         var dbContext = await GetDbContext();
