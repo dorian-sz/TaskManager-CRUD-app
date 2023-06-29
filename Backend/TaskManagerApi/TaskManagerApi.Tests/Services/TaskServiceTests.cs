@@ -176,4 +176,34 @@ public class TaskServiceTests
         //Assert
         result.Should().BeFalse();
     }
+
+    [Fact]
+    public async void TaskService_CreateTask_ReturnUserTask()
+    {
+        //Arrange
+        var taskService = await SetupTaskService();
+        var taskDTO = new TaskDTO
+        {
+            userTaskID = 11,
+            TaskName = "Task 11 name",
+            TaskDescription = "Task 11 description"
+        };
+        var user = new User
+        {
+            userID = 2,
+            Username = "user2name",
+            Password = "pass"
+        };
+        
+        //Act
+        var result = taskService.CreateTask(taskDTO, user);
+        
+        //Assert
+        result.Should().NotBeNull();
+        Assert.Equal(taskDTO.TaskName, result.TaskName);
+        Assert.Equal(taskDTO.TaskDescription, result.TaskDescription);
+        Assert.Equal(user.userID, result.User.userID);
+        Assert.Equal(user.Username, result.User.Username);
+        Assert.Equal(user.Password, result.User.Password);
+    }
 }
