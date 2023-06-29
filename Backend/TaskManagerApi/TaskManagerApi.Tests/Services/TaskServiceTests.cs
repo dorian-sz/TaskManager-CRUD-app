@@ -50,6 +50,22 @@ public class TaskServiceTests
         result.Should().BeOfType<List<UserTask>>();
     }
 
+    [Fact]
+    public async void TaskService_Get_ReturnUserTask()
+    {
+        //Arrange
+        var taskService = await SetupTaskService();
+        long id = 1;
+        
+        //Act
+        var result = await taskService.Get(id);
+        
+        //Assert
+        result.Should().NotBeNull();
+        result.Should().BeOfType<UserTask>();
+        Assert.Equal(id, result.userTaskID);
+    }
+
     private async Task<ITaskService> SetupTaskService()
     {
         var dbContext = await GetDbContext();
