@@ -16,27 +16,24 @@ public class TaskServiceTests
         
         var databaseContext = new TaskManagerContext(options);
         await databaseContext.Database.EnsureCreatedAsync();
-        
-        if (await databaseContext.UserTasks.CountAsync() < 0)
+
+        for (int i = 0; i < 10; i++)
         {
-            for (int i = 0; i < 10; i++)
-            {
-                databaseContext.Add(
-                    new UserTask
+            databaseContext.Add(
+                new UserTask
+                {
+                    userTaskID = i + 1,
+                    TaskName = $"Task {i + 1} name",
+                    TaskDescription = $"Task {i + 1} description",
+                    User = new User
                     {
-                        TaskName = $"Task {i+1} name",
-                        TaskDescription = $"Task {i+1} description",
-                        User = new User
-                        {
-                            Username = "user1name",
-                            Password = "pass",
-                        }
+                        Username = "user1name",
+                        Password = "pass",
                     }
-                );
-                await databaseContext.SaveChangesAsync();
-            }
+                }
+            );
+            await databaseContext.SaveChangesAsync();
         }
         return databaseContext;
     }
-
 }
