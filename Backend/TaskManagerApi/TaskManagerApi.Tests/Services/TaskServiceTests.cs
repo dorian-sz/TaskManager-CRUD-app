@@ -74,7 +74,7 @@ public class TaskServiceTests
         //Assert
         result.Should().NotBeNull();
         result.Should().BeOfType<UserTask>();
-        Assert.Equal(id, result.userTaskID);
+        result.userTaskID.Should().Be(id);
     }
 
     [Fact] public async void TaskService_Get_ReturnNull()
