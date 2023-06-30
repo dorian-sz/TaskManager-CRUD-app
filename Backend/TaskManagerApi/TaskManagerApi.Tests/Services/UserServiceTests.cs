@@ -94,14 +94,36 @@ public class UserServiceTests
             Username = "user1name",
             Password = "pass"
         };
-        
+
         //Act
         var result = await userService.Get(loginDTO);
-        
+
         //Assert
         result.Should().NotBeNull();
         result.Should().BeOfType<User>();
-        result.Username.Should().Be(loginDTO.Username);
-        result.Password.Should().Be(loginDTO.Password);
+        result.Should().BeEquivalentTo(loginDTO);
+    }
+
+    [Fact]
+    public async void UserService_Add_ReturnBool()
+    {
+        //Arrange
+        var userService = await SetupUserService();
+        var user = new User
+        {
+            userID = 11,
+            Username = "user11name",
+            Password = "pass"
+        };
+        
+        //Act
+        var result = await userService.Add(user);
+        var added = await userService.Get(user.userID);
+        
+        //Assert
+        result.Should().BeTrue();
+        added.Should().NotBeNull();
+        added.Should().BeOfType<User>();
+        added.Should().BeEquivalentTo(user);
     }
 }
