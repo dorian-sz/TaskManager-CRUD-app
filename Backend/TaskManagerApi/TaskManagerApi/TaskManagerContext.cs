@@ -6,8 +6,8 @@ namespace TaskManagerApi;
 
 public class TaskManagerContext : DbContext
 {
-    public DbSet<UserTask> UserTasks { get; set; }
-    public DbSet<User> Users { get; set; }
+    public virtual DbSet<UserTask> UserTasks { get; set; }
+    public virtual DbSet<User> Users { get; set; }
 
     public TaskManagerContext(DbContextOptions<TaskManagerContext> options) : base(options)
     {
