@@ -31,14 +31,14 @@ public class TaskServiceTests
             Password = "pass",
         };
         
-        for (int i = 0; i < 10; i++)
+        for (int i = 1; i <= 10; i++)
         {
             databaseContext.Add(
                 new UserTask
                 {
-                    userTaskID = i + 1,
-                    TaskName = $"Task {i + 1} name",
-                    TaskDescription = $"Task {i + 1} description",
+                    userTaskID = i,
+                    TaskName = $"Task {i} name",
+                    TaskDescription = $"Task {i} description",
                     User = user
                 }
             );
