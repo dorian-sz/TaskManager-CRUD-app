@@ -6,6 +6,14 @@ namespace TaskManagerApi.Tests.Services;
 
 public class UserServiceTests
 {
+    private async Task<IUserService> SetupUserService()
+    {
+        var dbContext = await SetupDbContext();
+        IUserService userService = new UserService(dbContext);
+
+        return userService;
+    }
+
     private async Task<TaskManagerContext> SetupDbContext()
     {
         var options = new DbContextOptionsBuilder<TaskManagerContext>()
