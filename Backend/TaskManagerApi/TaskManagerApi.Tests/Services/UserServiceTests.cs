@@ -184,4 +184,17 @@ public class UserServiceTests
         result.Should().BeTrue();
         contains.Should().BeFalse();
     }
+    
+    [Fact]
+    public async void UserService_Delete_ReturnFalse()
+    {
+        //Arrange
+        var userService = await SetupUserService();
+
+        //Act
+        var result = await userService.Delete(null);
+
+        //Assert
+        result.Should().BeFalse();
+    }
 }
