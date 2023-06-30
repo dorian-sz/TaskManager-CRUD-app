@@ -149,7 +149,7 @@ public class TaskServiceTests
     }
     
     [Fact]
-    public async void TaskService_Delete_SuccessfullyDeleted()
+    public async void TaskService_Delete_ReturnTrue()
     {
         //Arrange
         long id = 1;
@@ -167,7 +167,7 @@ public class TaskServiceTests
     }
     
     [Fact]
-    public async void TaskService_Delete_DeleteFailed()
+    public async void TaskService_Delete_ReturnFalse()
     {
         //Arrange
         var taskService = await SetupTaskService();
