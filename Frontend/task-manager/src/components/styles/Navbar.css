@@ -1,0 +1,39 @@
+.nav-bar{
+    display: flex;
+    width: 100%;
+    background-color: #41466b;
+}
+.nav-list{
+    width: 100%;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+}
+.li-container{
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.nav-link{
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    font-weight: 600;
+}
+
+.nav-link:hover{
+    color: #6495ED;
+}
+
+@media screen and (max-width: 650px) {
+    .nav-link{
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .nav-link{
+        font-size: 12px;
+    }
+}

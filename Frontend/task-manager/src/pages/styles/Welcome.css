@@ -1,0 +1,28 @@
+.home{
+    display: flex;
+    width: 40%;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+}
+
+.button-container{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.tab-btn{
+    width: 9rem;
+    height: 3rem;
+    border: none;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.tab-btn_clicked{
+    background-color: #d2e2fc;
+    transition: 0.2s linear;
+}
