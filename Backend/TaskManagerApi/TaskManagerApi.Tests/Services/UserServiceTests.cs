@@ -166,4 +166,22 @@ public class UserServiceTests
         //Assert
         result.Should().BeFalse();
     }
+
+    [Fact]
+    public async void UserService_Delete_ReturnTrue()
+    {
+        //Arrange
+        var userService = await SetupUserService();
+        long id = 1;
+        var user = await userService.Get(id);
+        
+        //Act
+        var result = await userService.Delete(user);
+        var users = await userService.GetAll();
+        var contains = users.Contains(user);
+        
+        //Assert
+        result.Should().BeTrue();
+        contains.Should().BeFalse();
+    }
 }
