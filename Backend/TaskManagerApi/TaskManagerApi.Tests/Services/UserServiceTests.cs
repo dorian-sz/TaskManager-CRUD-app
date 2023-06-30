@@ -212,7 +212,7 @@ public class UserServiceTests
         //Act
         var result = userService.CreateUser(userDTO);
 
-        //Result
+        //Assert
         result.Should().NotBeNull();
         result.Should().BeOfType<User>();
     }
