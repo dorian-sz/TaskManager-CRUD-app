@@ -52,4 +52,20 @@ public class UserServiceTests
         result.Should().BeOfType<List<User>>();
         result.Count.Should().Be(10);
     }
+
+    [Fact]
+    public async void UserService_Get_ReturnUser()
+    {
+        //Arrange
+        var userService = await SetupUserService();
+        long id = 1;
+        
+        //Act
+        var result = await userService.Get(id);
+        
+        //Assert
+        result.Should().NotBeNull();
+        result.Should().BeOfType<User>();
+        result.userID.Should().Be(id);
+    }
 }
