@@ -27,7 +27,7 @@ public class TaskService : ITaskService
     public async Task<bool> Add(UserTask entity)
     {
         _context.UserTasks.Add(entity);
-        return await Save();
+        return await _context.Save();
     }
     
     public async Task<bool> Update(TaskDTO entity)
@@ -38,7 +38,7 @@ public class TaskService : ITaskService
             _context.UserTasks.Entry(task).CurrentValues.SetValues(entity);
         }
 
-        return await Save();
+        return await _context.Save();
     }
 
     public async Task<bool> Delete(UserTask? entity)
@@ -48,13 +48,7 @@ public class TaskService : ITaskService
             _context.UserTasks.Remove(entity);
         }
 
-        return await Save();
-    }
-
-    public async Task<bool> Save()
-    {
-        var saved = await _context.SaveChangesAsync();
-        return saved > 0;
+        return await _context.Save();
     }
 
     public UserTask CreateTask(TaskDTO taskDto, User user)
