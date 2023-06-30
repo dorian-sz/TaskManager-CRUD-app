@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using TaskManagerApi.Models;
+using TaskManagerApi.Models.DTOs;
 using TaskManagerApi.Service;
 
 namespace TaskManagerApi.Tests.Services;
@@ -81,5 +82,26 @@ public class UserServiceTests
         
         //Assert
         result.Should().BeNull();
+    }
+
+    [Fact]
+    public async void UserService_Get_FromLoginDTOArgument_ReturnUser()
+    {
+        //Arrange
+        var userService = await SetupUserService();
+        var loginDTO = new LoginDTO
+        {
+            Username = "user1name",
+            Password = "pass"
+        };
+        
+        //Act
+        var result = await userService.Get(loginDTO);
+        
+        //Assert
+        result.Should().NotBeNull();
+        result.Should().BeOfType<User>();
+        result.Username.Should().Be(loginDTO.Username);
+        result.Password.Should().Be(loginDTO.Password);
     }
 }
