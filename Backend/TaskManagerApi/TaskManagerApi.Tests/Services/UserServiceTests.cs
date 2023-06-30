@@ -126,4 +126,25 @@ public class UserServiceTests
         added.Should().BeOfType<User>();
         added.Should().BeEquivalentTo(user);
     }
+
+    [Fact]
+    public async void UserService_Update_ReturnTrue()
+    {
+        //Arrange
+        var userService = await SetupUserService();
+        var userDTO = new UserDTO
+        {
+            userID = 1,
+            Username = "updated username",
+            Password = "updated password"
+        };
+        
+        //Act
+        var result = await userService.Update(userDTO);
+        var updatedUser = await userService.Get(userDTO.userID);
+        
+        //Assert
+        result.Should().BeTrue();
+        updatedUser.Should().BeEquivalentTo(userDTO);
+    }
 }
