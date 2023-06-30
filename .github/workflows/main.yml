@@ -21,4 +21,4 @@ jobs:
     - name: Build
       run: dotnet build ./Backend/TaskManagerApi/TaskManagerApi/TaskManagerApi.csproj --no-restore
     - name: Test
-      run: dotnet test ./Backend/TaskManagerApi/TaskManagerApi.sln --no-build --verbosity normal
+      run: dotnet test ./Backend/TaskManagerApi/TaskManagerApi.Tests/TaskManagerApi.Tests.csproj--no-build --verbosity normal
