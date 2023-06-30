@@ -197,4 +197,23 @@ public class UserServiceTests
         //Assert
         result.Should().BeFalse();
     }
+
+    [Fact]
+    public async void UserService_CreateUser_ReturnUser()
+    {
+        //Arrange
+        var userService = await SetupUserService();
+        var userDTO = new UserDTO
+        {
+            Username = "username",
+            Password = "password"
+        };
+
+        //Act
+        var result = userService.CreateUser(userDTO);
+
+        //Result
+        result.Should().NotBeNull();
+        result.Should().BeOfType<User>();
+    }
 }
