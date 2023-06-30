@@ -68,4 +68,18 @@ public class UserServiceTests
         result.Should().BeOfType<User>();
         result.userID.Should().Be(id);
     }
+
+    [Fact]
+    public async void UserService_Get_ReturnNull()
+    {
+        //Arrange
+        var userService = await SetupUserService();
+        long id = 11;
+        
+        //Act
+        var result = await userService.Get(id);
+        
+        //Assert
+        result.Should().BeNull();
+    }
 }
