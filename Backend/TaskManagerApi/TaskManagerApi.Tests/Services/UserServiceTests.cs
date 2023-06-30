@@ -216,4 +216,19 @@ public class UserServiceTests
         result.Should().NotBeNull();
         result.Should().BeOfType<User>();
     }
+
+    [Fact]
+    public async void UserService_UserExists_ReturnTrue()
+    {
+        //Arrange
+        var userService = await SetupUserService();
+        long id = 1;
+        var user = await userService.Get(id);
+        
+        //Act
+        var result = await userService.UserExists(user.Username);
+        
+        //Assert
+        result.Should().BeTrue();
+    }
 }
