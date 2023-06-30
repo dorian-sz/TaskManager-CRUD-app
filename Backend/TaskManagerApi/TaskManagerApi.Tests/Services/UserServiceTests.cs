@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using TaskManagerApi.Models;
 using TaskManagerApi.Service;
@@ -36,5 +37,19 @@ public class UserServiceTests
             await databaseContext.SaveChangesAsync();
         }
         return databaseContext;
+    }
+
+    [Fact]
+    public async void UserService_GetAll_ReturnList()
+    {
+        //Arrange
+        var userService = await SetupUserService();
+        
+        //Act
+        var result = await userService.GetAll();
+        
+        //Assert
+        result.Should().BeOfType<List<User>>();
+        result.Count.Should().Be(10);
     }
 }
