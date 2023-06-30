@@ -58,6 +58,7 @@ public class TaskServiceTests
         
         //Assert
         result.Should().BeOfType<List<UserTask>>();
+        result.Count.Should().Be(10);
     }
 
     [Fact]
