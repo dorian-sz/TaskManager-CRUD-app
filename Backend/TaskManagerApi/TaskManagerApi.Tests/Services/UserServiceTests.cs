@@ -231,4 +231,18 @@ public class UserServiceTests
         //Assert
         result.Should().BeTrue();
     }
+    
+    [Fact]
+    public async void UserService_UserExists_ReturnFalse()
+    {
+        //Arrange
+        var userService = await SetupUserService();
+        var username = "someusername";
+        
+        //Act
+        var result = await userService.UserExists(username);
+        
+        //Assert
+        result.Should().BeFalse();
+    }
 }
