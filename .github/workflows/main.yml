@@ -19,6 +19,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./Backend/TaskManagerApi/TaskManagerApi.sln
     - name: Build
-      run: dotnet build ./Backend/TaskManagerApi/TaskManagerApi/TaskManagerApi.csproj --no-restore
+      run: dotnet build ./TaskManagerApi/TaskManagerApi.csproj --no-restore
     - name: Test
-      run: dotnet test ./Backend/TaskManagerApi/TaskManagerApi.Tests/TaskManagerApi.Tests.csproj --no-build --verbosity normal
+      run: dotnet test ./TaskManagerApi.Tests/TaskManagerApi.Tests.csproj --no-build --verbosity normal
