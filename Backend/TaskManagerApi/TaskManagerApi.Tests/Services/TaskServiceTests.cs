@@ -126,8 +126,7 @@ public class TaskServiceTests
         
         //Assert
         result.Should().BeTrue();
-        updatedTask.TaskName.Should().Be(taskDTO.TaskName);
-        updatedTask.TaskDescription.Should().Be(taskDTO.TaskDescription);
+        updatedTask.Should().BeEquivalentTo(taskDTO);
     }
     
     [Fact]
@@ -187,7 +186,6 @@ public class TaskServiceTests
         var taskService = await SetupTaskService();
         var taskDTO = new TaskDTO
         {
-            userTaskID = 11,
             TaskName = "Task 11 name",
             TaskDescription = "Task 11 description"
         };
@@ -203,11 +201,8 @@ public class TaskServiceTests
         
         //Assert
         result.Should().NotBeNull();
-        Assert.Equal(taskDTO.TaskName, result.TaskName);
-        Assert.Equal(taskDTO.TaskDescription, result.TaskDescription);
-        Assert.Equal(user.userID, result.User.userID);
-        Assert.Equal(user.Username, result.User.Username);
-        Assert.Equal(user.Password, result.User.Password);
+        result.Should().BeEquivalentTo(taskDTO);
+        result.User.Should().BeEquivalentTo(user);
     }
 
     [Fact]
