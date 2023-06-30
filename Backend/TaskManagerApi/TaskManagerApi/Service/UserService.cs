@@ -31,7 +31,7 @@ public class UserService : IUserService
     public async Task<bool> Add(User entity)
     {
         _context.Users.Add(entity);
-        return await Save();
+        return await _context.Save();
     }
 
     public async Task<bool> Update(UserDTO entity)
@@ -42,7 +42,7 @@ public class UserService : IUserService
             _context.Users.Entry(task).CurrentValues.SetValues(entity);
         }
 
-        return await Save();
+        return await _context.Save();
     }
 
     public async Task<bool> Delete(User? entity)
@@ -52,13 +52,7 @@ public class UserService : IUserService
             _context.Users.Remove(entity);
         }
 
-        return await Save();
-    }
-
-    public async Task<bool> Save()
-    {
-        var saved = await _context.SaveChangesAsync();
-        return saved > 0;
+        return await _context.Save();
     }
     
     public User CreateUser(UserDTO userDto)

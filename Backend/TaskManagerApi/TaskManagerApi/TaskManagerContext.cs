@@ -13,4 +13,10 @@ public class TaskManagerContext : DbContext
     {
         
     }
+    
+    public async Task<bool> Save()
+    {
+        var saved = await SaveChangesAsync();
+        return saved > 0;
+    }
 }
