@@ -126,8 +126,8 @@ public class TaskServiceTests
         
         //Assert
         result.Should().BeTrue();
-        Assert.Equal(taskDTO.TaskName, updatedTask.TaskName);
-        Assert.Equal(taskDTO.TaskDescription, updatedTask.TaskDescription);
+        updatedTask.TaskName.Should().Be(taskDTO.TaskName);
+        updatedTask.TaskDescription.Should().Be(taskDTO.TaskDescription);
     }
     
     [Fact]
