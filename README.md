@@ -18,19 +18,19 @@ Clone the repository
 
 Install the required dependencies for the frontend by navigating to:  .\TaskManager-CRUD-app\Frontend\task-manager
 
-Then type in the terminal and press enter
+Then type in the terminal
 ```sh
 npm install
 ```
 To run the backend navigate to:  .\TaskManager-CRUD-app\Backend\TaskManagerApi\TaskManagerApi 
 
-Then type in the terminal press enter
+Then type in the terminal
 ```sh
 dotnet run
 ```
 To run the frontend navigate to:  .\TaskManager-CRUD-app\Frontend\task-manager
 
-Then type in the terminal press enter
+Then type in the terminal
 ```sh
 npm start
 ```
