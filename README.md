@@ -10,6 +10,7 @@ This is an ongoing project where I practice and learn new technologies and techn
 - React was used for the frontend which is a JavaScript library for building user interfaces
 - JWT authentication and authorization
 - Protected React routes
+- CI pipeline with Github workflows for .NET with own tests
 
 ## To get started with the TaskManager-CRUD-app
 
