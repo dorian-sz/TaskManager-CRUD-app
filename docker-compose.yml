@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  task-app:
+    container_name: task-manager-frontend-container
+    image: task-manager-app-frontend-image
+    environment:
+      PORT: 3000
+    ports:
+      - 3000:3000
+  web-api:
+    container_name: task-manager-backend-container
+    image: task-manager-backend-image
+    build: 
+      context: ./
+      dockerfile: Backend/TaskManagerApi/Dockerfile .
+    ports:
+      - 5084:80
+  sql:
+    container_name: task-manager-sql-server
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=y
+      - SA_PASSWORD=STRONGpassword!1
