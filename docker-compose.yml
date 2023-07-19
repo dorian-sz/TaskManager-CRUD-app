@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build: 
+      context: ./Backend/TaskManagerApi/TaskManagerApi
+      dockerfile: Dockerfile
+    ports:
+      - 5084:5084
+  frontend:
+    build:
+      context: ./Frontend/task-manager
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+  sql:
+    build: 
+      context: .
+      dockerfile: sql.dockerfile
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "STRONGpassword!1"
+
