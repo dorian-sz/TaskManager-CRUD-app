@@ -1,4 +1,4 @@
-# Task manager app (Under development)
+# Task manager app
 ### Welcome to the Task Manager CRUD App repository
 The main feature of this app is the ability to create and delete tasks which are then stored in the database for the specific user. New users can be created in the register page or you can log into an existing user on the login page.
 
