@@ -21,7 +21,7 @@ Either with Docker or manually by using dotnet, npm and mssql
 First clone the repository
 
 ### Without Docker
-You will need to have dotnet, npm and mssql installed
+You will need to have dotnet, nodejs and mssql installed
 
 Install the required dependencies for the frontend by navigating to:  .\TaskManager-CRUD-app\Frontend\task-manager
 
