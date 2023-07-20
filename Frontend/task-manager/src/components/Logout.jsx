@@ -1,17 +1,12 @@
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import { Fetch } from "./Fetch";
 
 const Logout = () => {
     const {setAuth} = useAuth({});
 
     const logout = async () => {
-
-        const response = await fetch("http://localhost:5084/api/Auth/logout", {
-            method : 'POST',
-            headers : {'Content-Type' : 'application/json'},
-            credentials : 'include'
-        
-        })
+        const response = await Fetch("Auth/logout", "POST")
 
         if (response.ok) {
             setAuth({});

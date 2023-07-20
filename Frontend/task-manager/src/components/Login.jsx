@@ -1,10 +1,9 @@
 import jwt_decode from "jwt-decode";
 import { useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./styles/Form.css"
 import useAuth from "../hooks/useAuth";
-
-const loginUrl = "http://localhost:5084/api/Auth"
+import { Fetch } from "./Fetch";
 
 const Login = () => {
     const { setAuth } = useAuth();
@@ -18,15 +17,9 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const body = JSON.stringify({username, password});
+        const response = await Fetch("Auth", "POST", body);
 
-        const response = await fetch(loginUrl, {
-            method : "POST",
-            headers : {
-                "Content-Type" : "application/json"
-            },
-            credentials : 'include',
-            body : JSON.stringify({username, password})
-        })
         if (response.ok) {
             const responseJson = await response.json();
             const token = responseJson.token;

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Navigate} from 'react-router-dom';
 import "./styles/Form.css";
+import { Fetch } from './Fetch';
 
 const Register = ({setDisplay}) => {
     const [username, setUsername] = useState('');
@@ -8,15 +8,8 @@ const Register = ({setDisplay}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const response = await fetch("http://localhost:5084/api/Register", {
-            method : 'POST',
-            headers : {'Content-Type' : 'application/json'},
-            body : JSON.stringify({
-                username,
-                password
-            })
-        });
+        const body= JSON.stringify({username, password})
+        await Fetch("Register", "POST", body)
         setDisplay(true);
     }
 
