@@ -14,7 +14,14 @@ This is an ongoing project where I practice and learn new technologies and techn
 
 ## To get started with the TaskManager-CRUD-app
 
-Clone the repository
+### You can run the TaskManager-CRUD-app
+
+Either with Docker or manually by using dotnet, npm and mssql
+
+First clone the repository
+
+### Without Docker
+You will need to have dotnet, npm and mssql installed
 
 Install the required dependencies for the frontend by navigating to:  .\TaskManager-CRUD-app\Frontend\task-manager
 
@@ -33,4 +40,14 @@ To run the frontend navigate to:  .\TaskManager-CRUD-app\Frontend\task-manager
 Then type in the terminal
 ```sh
 npm start
+```
+
+### With Docker
+You will need Docker
+
+Navigate to: .\TaskManager-CRUD-app
+
+Then type in the terminal
+```sh
+docker compose up -d
 ```
