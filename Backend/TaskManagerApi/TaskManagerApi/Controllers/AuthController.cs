@@ -21,14 +21,15 @@ public class AuthController : ControllerBase
     private readonly IUserService _service;
     private readonly IJWTSerivce _jwtSerivce;
     private readonly IAuthService _authService;
+    private readonly string _cookieName = "jwtcookie";
+    private readonly CookieOptions _cookieOptions = new CookieOptions() { HttpOnly = true, Secure = true };
     public AuthController(IUserService service, IJWTSerivce jwtSerivce, IAuthService authService)
     {
         _service = service;
         _jwtSerivce = jwtSerivce;
         _authService = authService;
     }
-
-    [AllowAnonymous]
+    
     [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginDTO loginDto)
     {
@@ -37,10 +38,18 @@ public class AuthController : ControllerBase
         if (user != null && _authService.VerifyUserPassword(loginDto.Password, user.Password))
         {
             var token = _jwtSerivce.Generate(user);
-            Response.Cookies.Append("jwtcookie", token.Token, new CookieOptions(){HttpOnly = true});
+            Response.Cookies.Append(_cookieName, token.Token, _cookieOptions);
             return Ok(token);
         }
 
-        return BadRequest(new { message = "Invalid credentials"});
+        return BadRequest(new { message = "Invalid credentials" });
+    }
+    
+    [Authorize]
+    [HttpPost("logout")]
+    public IActionResult Logout()
+    {
+        Response.Cookies.Delete(_cookieName, _cookieOptions);
+        return Ok();
     }
 }
