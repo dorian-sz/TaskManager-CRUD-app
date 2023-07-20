@@ -6,7 +6,6 @@ const Logout = () => {
     const {setAuth} = useAuth({});
 
     const logout = async () => {
-
         const response = await Fetch("Auth/logout", "POST")
 
         if (response.ok) {

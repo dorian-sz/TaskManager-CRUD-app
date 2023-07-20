@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "./styles/AddTask.css";
-
-const taskUrl = "http://localhost:5084/api/Task";
+import { Fetch } from './Fetch';
 
 const AddTask = ({userID, refresh}) => {
     const [TaskName, setTaskName] = useState('');
@@ -9,15 +8,8 @@ const AddTask = ({userID, refresh}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const response = await fetch(`${taskUrl}/${userID}`, {
-            method : "POST",
-            headers : {
-                "Content-Type" : "application/json"
-            },
-            credentials : 'include',
-            body : JSON.stringify({TaskName, TaskDescription})
-        })
+        const body = JSON.stringify({TaskName, TaskDescription});
+        await Fetch(`Task/${userID}`, "POST", body)
         setTaskName('');
         setTaskDescription('');
         refresh();
