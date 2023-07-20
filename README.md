@@ -49,5 +49,10 @@ Navigate to: .\TaskManager-CRUD-app
 
 Then type in the terminal
 ```sh
+docker compose build
+```
+
+Once the building finishes start the containers by typing in the terminal
+```sh
 docker compose up -d
 ```
