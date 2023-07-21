@@ -20,6 +20,21 @@ Either with Docker or manually by using dotnet, npm and mssql
 
 First clone the repository
 
+### With Docker
+You will need Docker
+
+Navigate to: .\TaskManager-CRUD-app
+
+Then type in the terminal
+```sh
+docker compose build
+```
+
+Once the building finishes start the containers by typing in the terminal
+```sh
+docker compose up -d
+```
+
 ### Without Docker
 You will need to have dotnet, nodejs and mssql installed
 
@@ -42,17 +57,3 @@ Then type in the terminal
 npm start
 ```
 
-### With Docker
-You will need Docker
-
-Navigate to: .\TaskManager-CRUD-app
-
-Then type in the terminal
-```sh
-docker compose build
-```
-
-Once the building finishes start the containers by typing in the terminal
-```sh
-docker compose up -d
-```
