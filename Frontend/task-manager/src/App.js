@@ -4,6 +4,7 @@ import Layout from './components/Layout';
 import RequireAuth from './components/RequireAuth';
 import {Route, Routes} from "react-router-dom";
 import Welcome from './pages/Welcome';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         {/*Protected routes*/}
         <Route element={<RequireAuth/>}>
           <Route path='tasks' element={<Tasks/>}/>
+          <Route path='profile' element={<Profile/>}/>
         </Route>
   
       </Route>
