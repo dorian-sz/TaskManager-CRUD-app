@@ -1,19 +1,11 @@
 import React from 'react'
 import "./styles/Task.css";
-
-const taskUrl = "http://localhost:5084/api/Task";
+import { Fetch } from './Fetch';
 
 const Task = ({task, refresh}) => {
 
     const deleteTask = async() => {
-        await fetch(`${taskUrl}/${task.userTaskID}`, {
-            method : "DELETE",
-            headers : {
-                "Content-Type" : "application/json"
-            },
-            credentials : 'include',
-        })
-
+        await Fetch("Task", "DELETE");
         refresh();
     }
     return (
