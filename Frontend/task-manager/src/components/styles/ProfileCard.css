@@ -1,0 +1,33 @@
+.profile-card-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 1rem;
+}
+
+.username-container{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.username-update-btn{
+    border-radius: 3px;
+    background: #198754;
+    color: white;
+    border: none;
+    height: 2rem;
+    width: 4.5rem;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.username-input{
+    outline: none;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid gray;
+    padding: 1rem;
+    height: 2rem;
+}
