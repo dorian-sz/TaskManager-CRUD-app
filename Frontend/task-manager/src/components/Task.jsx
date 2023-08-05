@@ -6,7 +6,7 @@ const Task = ({task, refresh}) => {
     const [taskDTO, setTaskDTO] = useState({})
 
     const deleteTask = async() => {
-        await Fetch("Task", "DELETE");
+        await Fetch(`Task/${taskDTO.userTaskID}`, "DELETE");
         refresh();
     }
 
