@@ -3,7 +3,6 @@
 The main feature of this app is the ability to create and delete tasks which are then stored in the database for the specific user. New users can be created in the register page or you can log into an existing user on the login page.
 
 ## Features and Technologies
-This is an ongoing project where I practice and learn new technologies and techniques. It features:
 - ASP.NET Core Web API backend
 - Entity Framework which is an ORM framework for handling database entities
 - MSSQL database server
