@@ -39,7 +39,7 @@ public class AuthController : ControllerBase
         {
             var token = _jwtSerivce.Generate(user);
             Response.Cookies.Append(_cookieName, token.Token, _cookieOptions);
-            return Ok(token);
+            return Ok(new { user, token });
         }
 
         return BadRequest(new { message = "Invalid credentials" });

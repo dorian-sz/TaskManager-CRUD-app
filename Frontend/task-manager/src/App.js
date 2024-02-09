@@ -1,25 +1,21 @@
 import './App.css';
 import Tasks from './pages/Tasks';
-import Layout from './components/Layout';
-import RequireAuth from './components/RequireAuth';
 import {Route, Routes} from "react-router-dom";
-import Welcome from './pages/Welcome';
 import Profile from './pages/Profile';
+import AuthLayout from './outlet/AuthLayout';
+import AuthenticationPage from './pages/AuthenticationPage';
 
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<Layout/>}>
         {/*Public routes*/}
-        <Route path='' element={<Welcome/>}/>
+        <Route path='/' element={<AuthenticationPage/>}/>
         
         {/*Protected routes*/}
-        <Route element={<RequireAuth/>}>
+        <Route element={<AuthLayout/>}>
           <Route path='tasks' element={<Tasks/>}/>
           <Route path='profile' element={<Profile/>}/>
         </Route>
-  
-      </Route>
     </Routes>
   );
 }
